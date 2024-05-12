@@ -70,3 +70,16 @@ security:
     expire-time: 86400000 #день
   jwt:
     secret: "uNJNOLhwcihcwuicwuNMDiwequi1_wequ71oiBVBHJ??nweuiehwu!!!!oiuwejopiwechbiuDRTRFDR"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
