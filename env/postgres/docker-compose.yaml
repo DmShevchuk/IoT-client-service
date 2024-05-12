@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: client
+      POSTGRES_USER: client
+      POSTGRES_DB: client
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"

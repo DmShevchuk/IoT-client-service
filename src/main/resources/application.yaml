@@ -1,0 +1,72 @@
+server:
+  servlet:
+    context-path: /client/api/v1
+  port: 5005
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: client-service
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/client
+    driver-class-name: org.postgresql.Driver
+    username: client
+    password: client
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 70
+      idle-timeout: 600000
+      connection-test-query: SELECT 1
+  jpa:
+    properties:
+      hibernate:
+        event.merge.entity_copy_observer: allow
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+        jdbc:
+          batch_size: 50
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        acks: 1
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+    consumer:
+      group-id: "order-status-consumer"
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+
+kafka-consumer-properties:
+  order-status: "spring.json.value.default.type=ru.iot.client.dto.consumer.OrderStatusDto"
+  notification: "spring.json.value.default.type=ru.iot.client.dto.consumer.NotificationEvent"
+
+kafka-topic:
+  send-order: orders
+  receive-order-status: order-statuses
+  receive-notification: notifications
+
+security:
+  auth:
+    expire-time: 86400000 #день
+  jwt:
+    secret: "uNJNOLhwcihcwuicwuNMDiwequi1_wequ71oiBVBHJ??nweuiehwu!!!!oiuwejopiwechbiuDRTRFDR"
