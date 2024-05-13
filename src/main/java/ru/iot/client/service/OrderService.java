@@ -2,6 +2,7 @@ package ru.iot.client.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.iot.client.domain.Notification;
 import ru.iot.client.domain.Order;
@@ -15,6 +16,7 @@ import ru.iot.client.service.producer.KafkaProducer;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -26,6 +28,7 @@ public class OrderService {
     private final KafkaProducer kafkaProducer;
 
     public void createOrderByNotificationId(UUID notificationId) {
+        log.info("Создаю заказ на основе уведомления {}", notificationId);
         Notification notification = notificationRepository.findById(notificationId)
                 .orElseThrow(EntityNotFoundException::new);
         Order order = new Order();

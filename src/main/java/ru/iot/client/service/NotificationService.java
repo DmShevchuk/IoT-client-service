@@ -18,6 +18,7 @@ import java.util.UUID;
 @Slf4j
 public class NotificationService {
     private final NotificationRepository notificationRepository;
+    private final OrderService orderService;
 
 
     public void save(NotificationEvent notificationEvent) {
@@ -25,7 +26,9 @@ public class NotificationService {
         notification.setClientId(notificationEvent.getClientId());
         notification.setProducts(notificationEvent.getProducts());
         notification.setCreatedAt(LocalDateTime.now());
-        notificationRepository.saveAndFlush(notification);
+        UUID saved = notificationRepository.saveAndFlush(notification).getId();
+        log.info("Сохраняю уведомление {}", saved);
+        orderService.createOrderByNotificationId(saved);
     }
 
 

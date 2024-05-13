@@ -30,7 +30,7 @@ public class KafkaConsumer {
             properties = "${kafka-consumer-properties.order-status}"
     )
     public void acceptOrderStatus(OrderStatusDto orderEvent) {
-        log.info("Сообщение получено {}", orderEvent);
+        log.info("Обновление статуса заказа {}", orderEvent);
         orderService.updateOrder(orderEvent);
     }
 
@@ -41,7 +41,7 @@ public class KafkaConsumer {
             properties = "${kafka-consumer-properties.notification}"
     )
     public void acceptNotification(NotificationEvent notificationEvent) {
-        log.info("Сообщение получено {}", notificationEvent);
+        log.info("Уведомление получено {}", notificationEvent);
         notificationService.save(notificationEvent);
     }
 
