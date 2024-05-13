@@ -47,5 +47,6 @@ public class OrderService {
         order.setStatus(orderStatusDto.getStatus());
         order.setDescription(orderStatusDto.getDescription());
         orderRepository.saveAndFlush(order);
+        log.info("Обновлён статус заказа {}={}", orderStatusDto.getOrderId(), orderStatusDto.getStatus());
     }
 }
