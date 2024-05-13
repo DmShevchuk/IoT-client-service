@@ -10,7 +10,7 @@ spring:
     name: client-service
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/client
+    url: jdbc:postgresql://182.20.0.18:5432/client
     driver-class-name: org.postgresql.Driver
     username: client
     password: client
@@ -34,7 +34,7 @@ spring:
         jdbc:
           batch_size: 50
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: 182.20.0.20:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
